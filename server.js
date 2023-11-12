@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const mongoose = require("mongoose");
 
 // CONFIGURATION
@@ -9,6 +10,7 @@ const app = express();
 
 // MIDDLEWARE
 app.use(express.json());
+app.use(cors());
 
 // Books
 const booksController = require("./controller/book_controller.js");
@@ -17,6 +19,9 @@ app.use("/books", booksController);
 // ROUTES
 app.get("/", (req, res) => {
   res.send("Welcome To Books API");
+});
+app.get("/books/:id", function (req, res) {
+  res.json({ msg: "This is CORS-enabled for all origins!" });
 });
 
 const start = async () => {
@@ -30,6 +35,7 @@ const start = async () => {
 };
 app.listen(PORT, () => {
   console.log("listening on port", PORT);
+  console.log("CORS-enabled web server listening on port 3000");
 });
 start();
 //module.exports = app;
